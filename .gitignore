@@ -154,7 +154,7 @@ cython_debug/
 
 # Arquivos do projeto a serem ignorados
 destino/
-site/mangas.json
+/site/mangas.json
 properties.json
 
 # PyCharm
