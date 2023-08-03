@@ -1,0 +1,10 @@
+{
+    "url": "NOME DO SITE",
+    "mangas": [
+        {
+            "nome": "NOME DO MANGA",
+            "prefixo": "PREFIXO",
+            "capitulo": 0
+        }
+    ]
+}
