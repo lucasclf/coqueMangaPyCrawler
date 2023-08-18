@@ -21,11 +21,9 @@ class LerMangaAccessor:
     def download_manga(self, manga):
         logger.debug(f"Download de {manga.name} iniciado, começando pelo {manga.chapter} através da plataforma {manga.origin}.")
         self.manga = manga
-        self.url_base = self.mount_url()
 
         while self.chapter_verification():
             logger.debug(f"Chapter {manga.chapter} existe.")
-            self.url_base = self.mount_url()
 
             self.download_chapter()
 
@@ -38,26 +36,31 @@ class LerMangaAccessor:
         return manga
 
     def download_chapter(self):
+        self.url_base = self.mount_url(self.manga.chapter)
+
         page = 1
 
         folder_path = f"download/{self.manga.name}/{self.manga.chapter}"
         self.folder_path = FileManager.create_folder_and_get_path(folder_path)
 
         url_complete = self.page_verification(page)
+        if url_complete is None:
+            self.url_base = self.mount_url(self.manga.chapter.zfill(2))
+            url_complete = self.page_verification(page)
+
         while url_complete is not None:
             logger.info(self.folder_path)
             download_manga(self.folder_path, self.manga, url_complete)
             page += 1
             url_complete = self.page_verification(page)
 
-    def mount_url(self):
+    def mount_url(self, chapter):
         url = (
                 OriginEnum.LER_MANGA.url
                 + self.manga.prefix
                 + self.manga.name
                 + OriginEnum.LER_MANGA.chapter_prefix
-                # + str(int(self.manga.chapter)).zfill(2)
-                + self.manga.chapter.zfill(2)
+                + chapter
                 + "/"
         )
         logger.debug(f"Mounted URL: {url}")
@@ -67,12 +70,18 @@ class LerMangaAccessor:
         logger.info(f"Iniciando verificação de capitulo: {self.manga.name} : capitulo {self.manga.chapter}")
 
         for extension_enum in ExtensionEnum:
+            self.url_base = self.mount_url(self.manga.chapter)
 
             url = urljoin(self.url_base, f"1{extension_enum.value}")
             logger.debug(f"URL {url}")
 
             if url_verification(url):
                 return True
+            else:
+                self.url_base = self.mount_url(self.manga.chapter.zfill(2))
+                url = urljoin(self.url_base, f"1{extension_enum.value}")
+                if url_verification(url):
+                    return True
 
         return False
 
