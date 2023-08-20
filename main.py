@@ -8,7 +8,7 @@ from utils import json_manager
 from view import user_interface
 from threading import Thread
 
-logging.config.fileConfig("./config/logging_config.ini")
+logging.config.fileConfig(os.path.join(os.path.dirname(__file__), "config", "logging_config.ini"))
 logger = logging.getLogger('cqnLogger')
 
 
