@@ -4,7 +4,7 @@ from enum import Enum, auto
 class OriginEnum(Enum):
     LER_MANGA = ("https://img.lermanga.org", "/capitulo-")
     MANGA_LIVRE = ("", "")
-    UNION_MANGA = ("https://umangas.club/leitor/mangas/", "")
+    UNION_MANGA = ("https://guimah.com/leitor/mangas/", "/")
 
     def __init__(self, url, chapter_prefix):
         self.url = url
