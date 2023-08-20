@@ -1,5 +1,7 @@
 import os
 import logging.config
+import shutil
+import zipfile
 
 from config.config_manga_crawler import ConfigMangaCrawler
 
@@ -38,3 +40,25 @@ class FileManager:
 
         except Exception as e:
             raise RuntimeError(e)
+
+    @staticmethod
+    def zip_file(folder_path, output_zip_name, output_zip_path):
+
+        try:
+            with zipfile.ZipFile(os.path.join(output_zip_path, f"{output_zip_name}.cbz"), 'w',
+                                 zipfile.ZIP_DEFLATED) as zipf:
+                for root, _, files in os.walk(folder_path):
+                    for file in files:
+                        file_path = os.path.join(root, file)
+                        zipf.write(file_path, os.path.relpath(file_path, folder_path))
+            logger.info("Compactação concluída com sucesso.")
+        except Exception as e:
+            logger.error(f"Erro durante a compactação: {e}")
+
+        try:
+            shutil.rmtree(folder_path)
+            logger.info(f"Deleção da pasta {folder_path} executada com sucesso.")
+        except Exception as e:
+            logger.error(f"Erro ao excluir a pasta: {e}")
+
+

@@ -1,6 +1,6 @@
+import os
 import time
 import logging.config
-
 
 from config.config_manga_crawler import ConfigMangaCrawler
 from origin_acessor import origin_acessor_factory
@@ -13,6 +13,7 @@ logger = logging.getLogger('cqnLogger')
 
 
 def start():
+    logger.info(os.path.join(os.path.dirname(__file__), "config", "logging_config.ini"))
     start_time = int(time.time() * 1000)
     logger.info("Iniciando operação.")
 
@@ -45,12 +46,14 @@ def start():
 
 if __name__ == "__main__":
     def run_operation():
+
         while config_ui.process_button["text"] == "Iniciar processo":
             time.sleep(1)
         start()
 
+
     config_ui = user_interface.ConfigurationUI()
-    operation_thread = Thread(target=run_operation)  # Cria uma thread para rodar o processo
-    operation_thread.start()  # Inicia a thread do processo
+    operation_thread = Thread(target=run_operation)
+    operation_thread.start()
     config_ui.root.mainloop()
-    operation_thread.join()  # Aguarda o término da thread do processo
+    operation_thread.join()
