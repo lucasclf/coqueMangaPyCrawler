@@ -1,0 +1,14 @@
+[
+    {
+        "origin": "LER_MANGA",
+        "name": "{NOME-DO-ANIME}",
+        "prefix": "/{PREFIXO}/",
+        "chapter": "{CAPITULO}"
+    },
+    {
+        "origin": "LER_MANGA",
+        "name": "{NOME-DO-ANIME}",
+        "prefix": "/{PREFIXO}/",
+        "chapter": "{CAPITULO}"
+    }
+]
