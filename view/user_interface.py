@@ -20,7 +20,7 @@ class ConfigurationUI:
 
         self.json_path_var = tk.StringVar()
         self.destiny_path_var = tk.StringVar()
-        self.logs_path_var = tk.StringVar()
+
         self.output_format_var = tk.StringVar(value=OutputFormatEnum.CBZ.value)
 
         self.create_widgets()
@@ -86,7 +86,6 @@ class ConfigurationUI:
         if self.process_button["text"] == "Iniciar processo":
             ConfigMangaCrawler.json_path = self.json_path_var.get()
             ConfigMangaCrawler.destiny_path = self.destiny_path_var.get()
-            ConfigMangaCrawler.logs_path = self.logs_path_var.get()
 
             self.json_button.config(state=tk.DISABLED)
             self.destiny_button.config(state=tk.DISABLED)
